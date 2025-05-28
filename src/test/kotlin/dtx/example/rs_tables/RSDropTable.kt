@@ -1,31 +1,40 @@
 package dtx.example.rs_tables
 import dtx.example.Item
 import dtx.example.Player
-import dtx.core.ArgMap
-import dtx.core.RollResult
-import dtx.core.Rollable
-import dtx.core.flattenToList
+import dtx.rs_tables.*
 
-infix fun Int.outOf(other: Int) = toDouble() / other.toDouble()
+fun rsDropTable(
+    identifier: String,
+    guaranteed: RSGuaranteedTable<Player, Item> = RSGuaranteedTable_Empty,
+    preRoll: RSPreRollTable<Player, Item> = RSPreRollTable_Empty,
+    mainTable: RSWeightedTable<Player, Item> = RSWeightedTable_Empty,
+    tertiaries: RSPreRollTable<Player, Item> = RSPreRollTable_Empty
+): RSDropTable<Player, Item> {
+    return RSDropTable(
+        identifier = identifier,
+        guaranteed = guaranteed,
+        preRoll = preRoll,
+        mainTable = mainTable,
+        tertiaries = tertiaries
+    )
+}
 
-data class RSDropTable(
-    val identifier: String,
-    val guaranteed: RSGuaranteedTable = RSGuaranteedTable.Empty,
-    val preRoll: RSPreRollTable = RSPreRollTable.Empty,
-    val mainTable: RSWeightedTable = RSWeightedTable.Empty,
-    val tertiaries: RSPreRollTable = RSPreRollTable.Empty,
-): RSTable() {
+val RSWeightedTable_Empty = RSWeightedTable<Player, Item>("", emptyList())
+val RSPreRollTable_Empty = RSPreRollTable<Player, Item>("", emptyList())
+val RSGuaranteedTable_Empty = RSGuaranteedTable<Player, Item>("", emptyList())
 
-    override val tableEntries: Collection<Rollable<Player, Item>> = emptyList()
+fun rsWeightedTable(builder: RSWeightedTableBuilder<Player, Item>.() -> Unit): RSWeightedTable<Player, Item> = RSWeightedTableBuilder<Player, Item>().apply(builder).build()
 
-    override val ignoreModifier: Boolean = true
+fun rsPrerollTable(builder: RSPrerollTableBuilder<Player, Item>.() -> Unit): RSPreRollTable<Player, Item> {
+    val builder = RSPrerollTableBuilder<Player, Item>()
+    builder.builder()
+    return builder.build()
+}
 
-    override fun roll(target: Player, otherArgs: ArgMap): RollResult<Item> {
-        val results = mutableListOf<RollResult<Item>>()
-        results.add(guaranteed.roll(target, otherArgs))
-        results.add(preRoll.roll(target, otherArgs))
-        results.add(mainTable.roll(target, otherArgs))
-        results.add(tertiaries.roll(target, otherArgs))
-        return results.flattenToList()
-    }
+fun rsTertiaryTable(builder: RSPrerollTableBuilder<Player, Item>.() -> Unit): RSPreRollTable<Player, Item> = rsPrerollTable(builder)
+
+fun rsGuaranteedTable(builder: RSGuaranteedTableBuilder<Player, Item>.() -> Unit): RSGuaranteedTable<Player, Item> {
+    val builder = RSGuaranteedTableBuilder<Player, Item>()
+    builder.builder()
+    return builder.build()
 }

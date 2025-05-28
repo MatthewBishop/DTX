@@ -3,17 +3,9 @@ import dtx.core.ArgMap
 import dtx.core.RollResult
 import dtx.core.flatten
 import dtx.core.singleRollable
-import dtx.example.rs_tables.ChampionType
-import dtx.example.rs_tables.ClueDifficulty
-import dtx.example.rs_tables.RSDropTable
-import dtx.example.rs_tables.RSTable
-import dtx.example.rs_tables.championScroll
-import dtx.example.rs_tables.clueScrollDrop
-import dtx.example.rs_tables.longCurvedTable
-import dtx.example.rs_tables.outOf
-import dtx.example.rs_tables.rsGuaranteedTable
-import dtx.example.rs_tables.rsTertiaryTable
-import dtx.example.rs_tables.rsWeightedTable
+import dtx.example.rs_tables.*
+import dtx.rs_tables.outOf
+import dtx.table.Table
 
 inline fun Item(itemId: String, amountRange: IntRange) = Item(itemId, amountRange.toRandomIntRange())
 
@@ -60,14 +52,14 @@ val oborTertiaries = rsTertiaryTable {
     1 outOf 5_000 chance championScroll(ChampionType.Giant)
 }
 
-val fullOborTable = RSDropTable(
+val fullOborTable = rsDropTable(
     identifier = "Obor Drops",
     guaranteed = oborGuaranteed,
     mainTable = oborMainTable,
     tertiaries = oborTertiaries,
 )
 
-fun <T: RSTable> T.countRoll(rolls: Int, target: Player, otherArgs: ArgMap = ArgMap.Empty): Map<String, Int> = buildMap {
+fun <T: Table<Player, Item>> T.countRoll(rolls: Int, target: Player, otherArgs: ArgMap = ArgMap.Empty): Map<String, Int> = buildMap {
     fun Item.inc() {
         putIfAbsent(itemId, 0)
         put(itemId, get(itemId)!! + 1)
