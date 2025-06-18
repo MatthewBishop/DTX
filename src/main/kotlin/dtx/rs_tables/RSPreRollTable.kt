@@ -1,4 +1,4 @@
-package dtx.example.rs_tables
+package dtx.rs_tables
 
 import dtx.core.ShouldRoll
 import dtx.core.defaultShouldRoll
@@ -8,22 +8,22 @@ import dtx.impl.MultiChanceTableBuilder
 import dtx.impl.MultiChanceTableImpl
 import dtx.impl.Percent
 
-class RSPreRollTable<T, R>(
+public class RSPreRollTable<T, R>(
     tableIdentifier: String,
     tableEntries: List<ChanceRollable<T, R>>,
     shouldRollFunc: ShouldRoll<T> = ::defaultShouldRoll,
 ): RSTable<T, R>, MultiChanceTable<T, R> by MultiChanceTableImpl<T, R>(
     tableIdentifier, tableEntries, shouldRollFunc
 ) {
-    companion object {
-        val EmptyTable = RSPreRollTable<Any?, Any?>("", emptyList()) { false }
-        fun <T, R> Empty() = EmptyTable as RSPreRollTable<T, R>
+    public companion object {
+        public val EmptyTable: RSPreRollTable<Any?, Any?> = RSPreRollTable<Any?, Any?>("", emptyList()) { false }
+        public fun <T, R> Empty(): RSPreRollTable<T, R> = EmptyTable as RSPreRollTable<T, R>
     }
 }
 
-class RSPrerollTableBuilder<T, R>: MultiChanceTableBuilder<T, R>() {
+public class RSPrerollTableBuilder<T, R>: MultiChanceTableBuilder<T, R>() {
 
-    infix fun Int.outOf(other: Int) = Percent(toDouble() / other.toDouble())
+    public infix fun Int.outOf(other: Int): Percent = Percent(toDouble() / other.toDouble())
 
     override fun build(): RSPreRollTable<T, R> = RSPreRollTable(
         tableName,
@@ -31,7 +31,7 @@ class RSPrerollTableBuilder<T, R>: MultiChanceTableBuilder<T, R>() {
     )
 }
 
-inline fun <T, R> rsPrerollTable(block: RSPrerollTableBuilder<T, R>.() -> Unit): RSPreRollTable<T, R> {
+public inline fun <T, R> rsPrerollTable(block: RSPrerollTableBuilder<T, R>.() -> Unit): RSPreRollTable<T, R> {
 
     val builder = RSPrerollTableBuilder<T, R>()
     builder.apply(block)
@@ -39,6 +39,6 @@ inline fun <T, R> rsPrerollTable(block: RSPrerollTableBuilder<T, R>.() -> Unit):
     return builder.build()
 }
 
-inline fun <T, R> rsTertiaryTable(block: RSPrerollTableBuilder<T, R>.() -> Unit): RSPreRollTable<T, R> {
+public inline fun <T, R> rsTertiaryTable(block: RSPrerollTableBuilder<T, R>.() -> Unit): RSPreRollTable<T, R> {
     return rsPrerollTable(block)
 }

@@ -7,6 +7,7 @@ import dtx.example.Item
 import dtx.example.Player
 import dtx.example.examplePlayer
 import dtx.example.randTo
+import dtx.rs_tables.*
 
 val oborGuaranteed = rsGuaranteedTable<Player, Item> {
     identifier("Obor guaranteed drops")

@@ -1,4 +1,4 @@
-package dtx.example.rs_tables
+package dtx.rs_tables
 
 import dtx.core.ArgMap
 import dtx.core.BaseDroprate
@@ -12,7 +12,7 @@ import dtx.impl.WeightedTable
 import dtx.table.Table
 import kotlin.random.Random
 
-class RSWeightedTable<T, R>(
+public class RSWeightedTable<T, R>(
     public val tableIdentifier: String,
     entries: List<WeightedRollable<T, R>>,
     private val baseDropRateFunc: BaseDroprate<T> = Rollable.Companion::defaultGetBaseDropRate,
@@ -74,10 +74,10 @@ class RSWeightedTable<T, R>(
         return RollResult.Nothing()
     }
 
-    companion object {
+    public companion object {
 
-        val EmptyTable = RSWeightedTable<Any?, Any?>("", emptyList()) { false }
+        public val EmptyTable: RSWeightedTable<Any?, Any?> = RSWeightedTable<Any?, Any?>("", emptyList()) { false }
 
-        fun <T, R> Empty() = EmptyTable as RSWeightedTable<T, R>
+        public fun <T, R> Empty(): RSWeightedTable<T, R> = EmptyTable as RSWeightedTable<T, R>
     }
 }
