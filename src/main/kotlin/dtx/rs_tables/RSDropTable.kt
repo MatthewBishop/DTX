@@ -1,20 +1,21 @@
-package dtx.example.rs_tables
-import dtx.example.Player
+package dtx.rs_tables
+
 import dtx.core.ArgMap
 import dtx.core.RollResult
 import dtx.core.Rollable
 import dtx.core.ShouldRoll
 import dtx.core.defaultShouldRoll
 import dtx.core.flattenToList
+import dtx.table.Table
 
-data class RSDropTable<T, R>(
+public data class RSDropTable<T, R>(
     val identifier: String,
     val guaranteed: RSGuaranteedTable<T, R> = RSGuaranteedTable.Empty(),
     val preRoll: RSPreRollTable<T, R> = RSPreRollTable.Empty(),
     val mainTable: RSWeightedTable<T, R> = RSWeightedTable.Empty(),
     val tertiaries: RSPreRollTable<T, R> = RSPreRollTable.Empty(),
     private val shouldRollFunc: ShouldRoll<T> = ::defaultShouldRoll,
-): RSTable<T, R> {
+): Table<T, R> {
 
     override val tableEntries: Collection<Rollable<T, R>> = emptyList()
 

@@ -1,8 +1,8 @@
-package dtx.example.rs_tables
+package dtx.rs_tables
 
 import dtx.impl.WeightedTableBuilder
 
-class RSWeightedTableBuilder<T, R>: WeightedTableBuilder<T, R>() {
+public class RSWeightedTableBuilder<T, R>: WeightedTableBuilder<T, R>() {
 
     public override fun build(): RSWeightedTable<T, R> {
         return RSWeightedTable(
@@ -15,7 +15,7 @@ class RSWeightedTableBuilder<T, R>: WeightedTableBuilder<T, R>() {
     }
 }
 
-fun <T, R> rsWeightedTable(block: RSWeightedTableBuilder<T, R>.() -> Unit): RSWeightedTable<T, R> {
+public fun <T, R> rsWeightedTable(block: RSWeightedTableBuilder<T, R>.() -> Unit): RSWeightedTable<T, R> {
 
     val builder = RSWeightedTableBuilder<T, R>()
     builder.apply(block)

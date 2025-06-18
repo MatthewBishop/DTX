@@ -3,6 +3,7 @@ package dtx.example.rs_tables
 import dtx.example.Item
 import dtx.example.Player
 import dtx.example.examplePlayer
+import dtx.rs_tables.rsWeightedTable
 
 val ringOfWealth = Item("ring_of_wealth")
 

@@ -7,6 +7,8 @@ import dtx.example.Item
 import dtx.example.Player
 import dtx.example.examplePlayer
 import dtx.example.randTo
+import dtx.rs_tables.*
+import dtx.table.Table
 
 val oborGuaranteed = rsGuaranteedTable<Player, Item> {
     identifier("Obor guaranteed drops")
@@ -59,7 +61,7 @@ val fullOborTable = RSDropTable(
     tertiaries = oborTertiaries,
 )
 
-fun <T, R, E: RSTable<T, R>> E.countRoll(rolls: Int, target: T, idSelector: (R) -> String, otherArgs: ArgMap = ArgMap.Empty): Map<String, Int> = buildMap {
+fun <T, R, E: Table<T, R>> E.countRoll(rolls: Int, target: T, idSelector: (R) -> String, otherArgs: ArgMap = ArgMap.Empty): Map<String, Int> = buildMap {
     fun R.inc() {
         val itemId = idSelector(this)
         putIfAbsent(itemId, 0)
