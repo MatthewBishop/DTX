@@ -10,10 +10,10 @@ import dtx.table.Table
 
 public data class RSDropTable<T, R>(
     val identifier: String,
-    val guaranteed: RSGuaranteedTable<T, R> = RSGuaranteedTable.Empty(),
-    val preRoll: RSPreRollTable<T, R> = RSPreRollTable.Empty(),
-    val mainTable: RSWeightedTable<T, R> = RSWeightedTable.Empty(),
-    val tertiaries: RSPreRollTable<T, R> = RSPreRollTable.Empty(),
+    val guaranteed: RSGuaranteedTable<T, R>,
+    val preRoll: RSPreRollTable<T, R>,
+    val mainTable: RSWeightedTable<T, R>,
+    val tertiaries: RSPreRollTable<T, R>,
     private val shouldRollFunc: ShouldRoll<T> = ::defaultShouldRoll,
 ): Table<T, R> {
 
