@@ -1,6 +1,5 @@
 package dtx.impl
 
-import dtx.core.ArgMap
 import dtx.core.Rollable
 import dtx.core.RollResult
 
@@ -17,8 +16,8 @@ public interface WeightedRollable<T, R>: Rollable<T, R> {
         return rollable
     }
 
-    public override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
-        return rollable.roll(target, otherArgs)
+    public override fun roll(target: T): RollResult<R> {
+        return rollable.roll(target)
     }
 
     private data object Empty: WeightedRollable<Any?, Any?> {

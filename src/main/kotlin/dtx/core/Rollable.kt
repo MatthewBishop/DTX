@@ -12,7 +12,7 @@ public interface Rollable<T, R> {
         return defaultGetBaseDropRate(target)
     }
 
-    public fun roll(target: T, otherArgs: ArgMap = ArgMap.Empty): RollResult<R>
+    public fun roll(target: T): RollResult<R>
 
     public companion object {
 
@@ -22,7 +22,7 @@ public interface Rollable<T, R> {
 
         public data object Empty: Rollable<Any?, Any?> {
 
-            override fun roll(target: Any?, otherArgs: ArgMap): RollResult<Any?> {
+            override fun roll(target: Any?): RollResult<Any?> {
                 return RollResult.Companion.Nothing()
             }
 
@@ -48,7 +48,7 @@ public interface Rollable<T, R> {
             return onSelectFun.invoke(target, result)
         }
 
-        override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+        override fun roll(target: T): RollResult<R> {
 
             if (!shouldRoll(target)) {
                 return RollResult.Nothing()
@@ -57,7 +57,7 @@ public interface Rollable<T, R> {
             val results = buildList {
 
                 rollables.forEach { rollable ->
-                    add(rollable.roll(target, otherArgs))
+                    add(rollable.roll(target))
                 }
             }
 
@@ -82,7 +82,7 @@ public interface Rollable<T, R> {
             return onSelectFun.invoke(target, result)
         }
 
-        override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+        override fun roll(target: T): RollResult<R> {
 
             if (!shouldRoll(target)){
                 return RollResult.Nothing()
@@ -107,7 +107,7 @@ public interface Rollable<T, R> {
             return onSelectFun.invoke(target, result)
         }
 
-        override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+        override fun roll(target: T): RollResult<R> {
 
             if (!shouldRoll(target)) {
                 return RollResult.Nothing()

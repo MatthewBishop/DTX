@@ -8,14 +8,14 @@ public class RSGuaranteedTable<T, R>(
     public override val tableEntries: Collection<Rollable<T, R>>,
     public override val ignoreModifier: Boolean = true,
 ): Table<T, R> {
-    override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+    override fun roll(target: T): RollResult<R> {
         if (tableEntries.isEmpty()) {
             return RollResult.Nothing()
         }
 
         val rollResults = mutableListOf<RollResult<R>>()
         tableEntries.forEach { tableEntry ->
-            rollResults.add(tableEntry.roll(target, otherArgs))
+            rollResults.add(tableEntry.roll(target))
         }
         return rollResults.flattenToList()
     }

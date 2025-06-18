@@ -1,6 +1,5 @@
 package dtx.rs_tables
 
-import dtx.core.ArgMap
 import dtx.core.RollResult
 import dtx.core.Rollable
 import dtx.core.SingleRollableBuilder
@@ -19,7 +18,7 @@ public class RSPreRollTable<T, R>(
 
     override val ignoreModifier: Boolean = true
 
-    override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+    override fun roll(target: T): RollResult<R> {
         if (tableEntries.isEmpty()) {
             return RollResult.Nothing()
         }
@@ -28,7 +27,7 @@ public class RSPreRollTable<T, R>(
         tableEntries.forEach { tableEntry ->
             val roll = Random.nextDouble(0.0, 1.0 + Double.MIN_VALUE)
             if (roll <= tableEntry.weight) {
-                results.add(tableEntry.roll(target, otherArgs))
+                results.add(tableEntry.roll(target))
             }
         }
         return results.flattenToList()

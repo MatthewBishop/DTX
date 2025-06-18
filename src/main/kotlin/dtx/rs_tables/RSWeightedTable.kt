@@ -31,17 +31,17 @@ public class RSWeightedTable<T, R>(
 
     private val maxRoll = (tableEntries.maxOfOrNull { it.rangeEnd } ?: 0) + 1
 
-    override fun roll(target: T, otherArgs: ArgMap): RollResult<R> {
+    override fun roll(target: T): RollResult<R> {
         if (tableEntries.isEmpty()) {
             return RollResult.Nothing()
         }
         if (tableEntries.size == 1) {
-            return tableEntries.first().roll(target, otherArgs)
+            return tableEntries.first().roll(target)
         }
         val roll = Random.nextInt(0, maxRoll)
         tableEntries.forEach {
             if (it checkWeight roll) {
-                return it.roll(target, otherArgs)
+                return it.roll(target)
             }
         }
         return RollResult.Nothing()

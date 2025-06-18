@@ -1,5 +1,4 @@
 package dtx.example
-import dtx.core.ArgMap
 import dtx.core.RollResult
 import dtx.core.flatten
 import dtx.core.singleRollable
@@ -59,14 +58,14 @@ val fullOborTable = rsDropTable(
     tertiaries = oborTertiaries,
 )
 
-fun <T: Table<Player, Item>> T.countRoll(rolls: Int, target: Player, otherArgs: ArgMap = ArgMap.Empty): Map<String, Int> = buildMap {
+fun <T: Table<Player, Item>> T.countRoll(rolls: Int, target: Player): Map<String, Int> = buildMap {
     fun Item.inc() {
         putIfAbsent(itemId, 0)
         put(itemId, get(itemId)!! + 1)
     }
 
     repeat(rolls) {
-        val result = roll(target, otherArgs).flatten()
+        val result = roll(target).flatten()
         when (result) {
             is RollResult.Nothing -> return@repeat
             is RollResult.Single -> result.result.inc()
