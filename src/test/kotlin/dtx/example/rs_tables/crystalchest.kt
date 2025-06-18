@@ -4,9 +4,6 @@ import dtx.core.Rollable
 import dtx.example.Gender
 import dtx.example.Item
 import dtx.example.Player
-import dtx.rs_tables.RSDropTable
-import dtx.rs_tables.rsGuaranteedTable
-import dtx.rs_tables.rsWeightedTable
 import kotlin.random.Random
 
 // a whole table for 1 dragonstone? crazy
@@ -80,7 +77,7 @@ val crystalChestMain = rsWeightedTable<Player, Item> {
     }
 }
 
-val CrystalChestTable = RSDropTable(
+val CrystalChestTable = rsDropTable(
     "Crystal Chest",
     guaranteed = dragonstoneTable,
     mainTable = crystalChestMain

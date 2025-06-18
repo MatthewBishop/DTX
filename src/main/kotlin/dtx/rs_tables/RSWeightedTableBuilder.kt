@@ -14,11 +14,3 @@ public class RSWeightedTableBuilder<T, R>: WeightedTableBuilder<T, R>() {
         )
     }
 }
-
-public fun <T, R> rsWeightedTable(block: RSWeightedTableBuilder<T, R>.() -> Unit): RSWeightedTable<T, R> {
-
-    val builder = RSWeightedTableBuilder<T, R>()
-    builder.apply(block)
-
-    return builder.build()
-}

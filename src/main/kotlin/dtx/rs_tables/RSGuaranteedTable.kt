@@ -64,11 +64,3 @@ public class RSGuaranteedTableBuilder<T, R> {
         tableEntries = tableEntries
     )
 }
-
-public fun <T, R> rsGuaranteedTable(block: RSGuaranteedTableBuilder<T, R>.() -> Unit): RSGuaranteedTable<T, R> {
-
-    val builder = RSGuaranteedTableBuilder<T, R>()
-    builder.apply(block)
-
-    return builder.build()
-}

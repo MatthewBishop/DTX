@@ -4,7 +4,6 @@ import dtx.core.singleRollable
 import dtx.example.Item
 import dtx.example.Player
 import dtx.example.sendMessage
-import dtx.rs_tables.rsWeightedTable
 
 val LongAndCurvedBoneTable = rsWeightedTable<Player, Item> {
     name("Long and Curved Bone table")

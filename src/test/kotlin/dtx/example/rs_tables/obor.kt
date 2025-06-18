@@ -7,7 +7,6 @@ import dtx.example.Item
 import dtx.example.Player
 import dtx.example.examplePlayer
 import dtx.example.randTo
-import dtx.rs_tables.*
 import dtx.table.Table
 
 val oborGuaranteed = rsGuaranteedTable<Player, Item> {
@@ -54,7 +53,7 @@ val oborTertiaries = rsTertiaryTable<Player, Item> {
     1 outOf 5_000 chance championScroll(ChampionType.Giant)
 }
 
-val fullOborTable = RSDropTable(
+val fullOborTable = rsDropTable(
     identifier = "Obor Drops",
     guaranteed = oborGuaranteed,
     mainTable = oborMainTable,
